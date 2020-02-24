@@ -1,6 +1,8 @@
 This Project is directly copied and used from another project to test and use for a v3 lidar.
 The original Url-link is: https://github.com/garmin/LIDARLite_RaspberryPi_Library.git
 
+I did some changes to this project so that my lidar could do not only just scan and check
+the distance. I need to use this library to determine if there is an obstacle and what kind of obstacle in a robot. The algorithm is my own algorithm.
 
 # LIDAR-Lite Raspberry Pi Library
 
