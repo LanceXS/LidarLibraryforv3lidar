@@ -38,6 +38,9 @@ int main()
     __u16 distance;
     __u8  busyFlag;
 	__u16 straightdis;
+	__u16 heightvalue;
+	
+	 
     // Initialize i2c peripheral in the cpu core
     myLidarLite.i2c_init();
 	//unsigned int ms1000 = 1000000;
@@ -58,16 +61,36 @@ int main()
             distance = myLidarLite.readDistance();
             printf("Original value\n");
             printf("%4d\n",distance);
-            straightdis = myLidarLite.getXlength(45, distance);//Straight distance from the robot to the obstacle
-			printf("Straight value\n");
-            printf("%4d\n",straightdis);
-            
-            usleep(1000000);
+            if(distance > 2){
+				straightdis = myLidarLite.getXlength(45, distance);//Straight distance from the robot to the obstacle
+				printf("Straight value when lidar is 45 degrees down\n");
+				printf("%4d\n",straightdis);
+				heightvalue = myLidarLite.getHeight(45, distance);//height of the obstacle
+				printf("height of the obstacle\n");
+				printf("%4d\n",heightvalue);
+				if(heightvalue < 80 && heightvalue > 0){
+					printf("the obstacle is a rock\n");
+				}
+				else if(heightvalue > 80){
+					printf("the obstacle is a hole\n");
+				}
+				else if(heightvalue == 80){
+					printf("no obstacle\n");
+				}
+				else{
+					printf("error\n");
+				}
+			}
+			else{
+				printf("error: too close\n");
+			}
+            usleep(5000000);
         }
         // sleeps(100000);
         //Sleep(1000);
         //usleep(ms1000);
     }
+    return 0;
 }
 
 
